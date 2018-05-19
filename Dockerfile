@@ -25,7 +25,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 	
 RUN apt-get install -y --no-install-recommends \
-		dotnet-sdk-2.1.4 \
+		dotnet-sdk-2.1.200 \
 	&& rm -rf /var/lib/apt/lists/*
 	
 # Trigger the population of the local package cache
