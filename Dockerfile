@@ -23,11 +23,18 @@ RUN apt-get update \
         libuuid1 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
-	
-RUN apt-get install -y --no-install-recommends \
-		dotnet-sdk-2.1.200 \
-	&& rm -rf /var/lib/apt/lists/*
-	
+
+# Install .NET Core SDK
+#https://github.com/dotnet/core/blob/master/release-notes/releases.csv
+ENV DOTNET_SDK_VERSION 1.1.8
+ENV DOTNET_SDK_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-dev-debian-x64.$DOTNET_SDK_VERSION.tar.gz
+
+RUN curl -SL $DOTNET_SDK_DOWNLOAD_URL --output dotnet.tar.gz \
+    && mkdir -p /usr/share/dotnet \
+    && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
+    && rm dotnet.tar.gz \
+    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+
 # Trigger the population of the local package cache
 ENV NUGET_XMLDOC_MODE skip
 RUN mkdir warmup \
