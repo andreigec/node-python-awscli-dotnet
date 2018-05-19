@@ -1,4 +1,5 @@
-FROM node:10
+FROM buildpack-deps:jessie-scm
+
  RUN apt-get update \
    && apt-get install -y python-dev zip jq \
    && cd /tmp \
